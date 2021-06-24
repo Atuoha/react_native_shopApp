@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList, Button } from "react-native";
+import React from "react";
+import { NavigationContainer } from '@react-navigation/native'
+import { TopNavigation } from './navigation/shopNavigation'
 
 export default function App() {
-  
-
   return (
-    <View style={styles.screen}>
-        <Text>Hello World! </Text>
-    </View>
+   <NavigationContainer>
+      <TopNavigation />
+   </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    padding: 50,
-  },
-});
