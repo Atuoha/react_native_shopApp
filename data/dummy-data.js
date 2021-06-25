@@ -27,7 +27,7 @@ const PRODUCTS = [
   ),
   new Product(
     'p4',
-    'u3',
+    'u1',
     'The Book - Limited Edition',
     'https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?cs=srgb&dl=blur-blurred-book-pages-46274.jpg&fm=jpg',
     "What the content is? Why would that matter? It's a limited edition!",

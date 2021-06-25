@@ -1,33 +1,34 @@
-import React, {useEffect} from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import React, { useEffect } from "react";
+import { FlatList } from "react-native";
+import { useSelector } from "react-redux";
+import ProductItem from "../../components/shop/ProductItem";
 
+const ProductOverScreen = ({ route, navigation }) => {
+  const Products = useSelector((state) => state.products.products);
+  console.log(Products);
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Shoppingly",
+      headerTitleStyle: {
+        fontSize: 23,
+      },
+    });
+  });
 
-const ProductOverScreen = ({route, navigation})=>{
+  const renderItem = (itemData) => {
+    return (
+      <ProductItem
+        imageUrl={itemData.item.image}
+        price={itemData.item.price}
+        name={itemData.item.name}
+        viewDetails={() =>
+          navigation.navigate("Details", { id: itemData.item.id })
+        }
+      />
+    );
+  };
 
-    useEffect(()=>{
-        navigation.setOptions({
-            headerTitle: 'Shoppingly 🛒',
-            headerRight: ()=>(
-                <Ionicons name="ios-shopping-cart" size={25} onPress={()=> alert('cart')} />
-            )}
-        )
-    })
+  return <FlatList data={Products} renderItem={renderItem} />;
+};
 
- return(
-     <View style={styles.screen}>
-         <Text>ProductOverScreen</Text>
-         <Button onPress={()=>navigation.navigate("Details", {id: '222'})} title="click me" />
-     </View>
- )
-}
-
-const styles = StyleSheet.create({
-    screen:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
-
-export default ProductOverScreen
+export default ProductOverScreen;
