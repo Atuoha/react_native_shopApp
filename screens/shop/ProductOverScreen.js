@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
-import { FlatList } from "react-native";
+import React, { useEffect, useCallback } from "react";
+import { FlatList, Text, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
+import Color from "../../constants/color";
+import { useDispatch } from "react-redux";
+import { toggle_to_cart } from "../../store/actions/cart";
 
 const ProductOverScreen = ({ route, navigation }) => {
   const Products = useSelector((state) => state.products.products);
@@ -15,6 +18,11 @@ const ProductOverScreen = ({ route, navigation }) => {
     });
   });
 
+  const dispatch = useDispatch();
+  const toggle_to_cartFnc = useCallback(() => {
+    dispatch(toggle_to_cart);
+  }, [dispatch, Products]);
+
   const renderItem = (itemData) => {
     return (
       <ProductItem
@@ -24,11 +32,34 @@ const ProductOverScreen = ({ route, navigation }) => {
         viewDetails={() =>
           navigation.navigate("Details", { id: itemData.item.id })
         }
+        addToCart={() =>
+            dispatch(toggle_to_cart(itemData.item.id))
+         
+        }
       />
     );
   };
 
-  return <FlatList data={Products} renderItem={renderItem} />;
+  return (
+    <>
+      <View style={styles.textView}>
+        <Text style={styles.text}>All Available Products</Text>
+      </View>
+      <FlatList data={Products} renderItem={renderItem} />
+    </>
+  );
 };
+
+const styles = StyleSheet.create({
+  textView: {
+    backgroundColor: Color.primary,
+    padding: 10,
+  },
+  text: {
+    textAlign: "center",
+    color: "white",
+    // fontWeight: 'bold'
+  },
+});
 
 export default ProductOverScreen;

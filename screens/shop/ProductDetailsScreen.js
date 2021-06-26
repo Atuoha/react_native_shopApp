@@ -1,32 +1,85 @@
-import React, { useEffect } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useCallback } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  ScrollView,
+} from "react-native";
+import { useSelector } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
+import Color from "../../constants/color";
+import { useDispatch } from "react-redux";
+import { toggle_to_cart } from "../../store/actions/cart";
 
-const ProductDetailsScreen = ({route, navigation})=>{
-    const { id } = route.params
-    const products = useSelector(state => state.products.products)
-    const productDetails = products.find(product=> product.id === id)
+const ProductDetailsScreen = ({ route, navigation }) => {
+  const { id } = route.params;
+  const productDetails = useSelector((state) =>
+    state.products.products.find((product) => product.id === id)
+  );
 
-    useEffect(()=>{
-        navigation.setOptions({
-            headerTitle: productDetails.name
-        })
-    }, [id])
+  const cartProducts = useSelector((state) => state.carts.cartProducts)
+  const index = cartProducts.findIndex(prod=> prod.id === id);
+  let cartStatus;
+  if(index >= 0){
+      cartStatus = 'Remove from cart'
+  }else{
+      cartStatus = 'Add to Cart'
+  }
+  
 
- return(
-     <View style={styles.screen}>
-         <Text>ProductDetailsScreen: {productDetails.name}</Text>
-         <Button onPress={() =>navigation.goBack()} title="click me" />
-     </View>
- )
-}
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: productDetails.name,
+    });
+  }, [id]);
+
+  const dispatch = useDispatch();
+
+  const toggle_to_cartsFnc = () => {
+    dispatch(toggle_to_cart(id));
+    console.log('dispatching...')
+  }
+
+  return (
+    <ScrollView>
+      <Image source={{ uri: productDetails.name }} style={styles.imageStyle} />
+      <Button
+        title={cartStatus}
+        color={Color.primary}
+        onPress={() => toggle_to_cartsFnc() }
+      />
+      <View style={styles.descView}>
+        <Text style={styles.priceText}>${productDetails.price}</Text>
+        <Text>Available in {productDetails.colors}</Text>
+        <Text>{productDetails.desc}</Text>
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    screen:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+  imageStyle: {
+    width: "100%",
+    height: 300,
+  },
 
-export default ProductDetailsScreen
+  descView: {
+    alignItems: "center",
+    padding: 20,
+  },
+
+  priceText: {
+    fontSize: 25,
+    marginVertical: 4,
+    color: "#888",
+  },
+
+  nameStyle: {
+    fontWeight: "bold",
+    fontSize: 30,
+  },
+});
+
+export default ProductDetailsScreen;

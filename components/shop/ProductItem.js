@@ -20,33 +20,32 @@ const ProductItem = (props) => {
   }
 
   return (
-    <View>
-      <RenderComponent  onPress={props.viewDetails} style={styles.grid}>
-            <Image style={styles.imageStyle} source={{ uri: props.imageUrl }} />
+      <RenderComponent onPress={props.viewDetails} style={styles.grid} useForeground>
+        <Image style={styles.imageStyle} source={{ uri: props.imageUrl }} />
 
-           <View style={styles.details}>
-            <Text style={styles.nameStyle}>{props.name}</Text>
-            <Text style={styles.priceText}>${props.price.toFixed(2)}</Text>
-          </View>
+        <View style={styles.details}>
+          <Text style={styles.nameStyle}>{props.name}</Text>
+          <Text style={styles.priceText}>${props.price.toFixed(2)}</Text>
+        </View>
 
         <View style={styles.btnView}>
           <View style={styles.individualBtnView}>
             <Button
               title={<AntDesign name="book" size={17} />}
-              color={Platform.OS === 'ios' ? '' : Color.primary}
+              color={Color.primary}
               onPress={props.viewDetails}
             />
           </View>
 
           <View style={styles.individualBtnView}>
             <Button
-              title={<AntDesign name="plus" size={17} />}
-              color={Platform.OS === 'ios' ? '' : Color.primary}
+              title={<AntDesign name="shoppingcart" size={17} />}
+              color={Color.primary}
+              onPress={props.addToCart}
             />
           </View>
         </View>
       </RenderComponent>
-    </View>
   );
 };
 
@@ -66,28 +65,26 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 
-  imageStyle:{
-    width: '100%',
-    height: '60%'
+  imageStyle: {
+    width: "100%",
+    height: "60%",
   },
 
- 
-  details:{
-    height: '15%',
-    textAlign: 'center',
+  details: {
+    height: "15%",
+    textAlign: "center",
     padding: 5,
   },
 
-
-  priceText:{
-    textSize: 20,
+  priceText: {
+    fontSize: 15,
     marginVertical: 4,
-    color: '#888'
+    color: "#888",
   },
-  
-  nameStyle:{
-    fontWeight: 'bold',
-    fontSize: 25,
+
+  nameStyle: {
+    fontWeight: "bold",
+    fontSize: 20,
   },
 
   btnView: {
@@ -95,8 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
-    height: '20%',
-    marginVertical: 10
+    height: "20%",
+    marginVertical: 10,
   },
 
   individualBtnView: {

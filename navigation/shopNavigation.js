@@ -21,7 +21,7 @@ const screenOptions = {
     fontWeight: "bold",
   },
   headerRight: () => (
-    <AntDesign name="shoppingcart" color='white' size={35} onPress={() => alert("cart")} />
+    <AntDesign name="shoppingcart" color='white' size={35} onPress={() =>{}} />
   ),
 };
 
@@ -53,7 +53,7 @@ export const TabNavigation = () => {
       tabBarOptions={{
         activeTintColor: "white",
         activeBackgroundColor: Color.primary,
-        inactiveTintColor: 'red',
+        inactiveTintColor: Color.primary,
         activeColor: "white",
       }}>
       <Tab.Screen
@@ -67,7 +67,7 @@ export const TabNavigation = () => {
             )
           },
           tabTitleStyle:{
-            inactiveTintColor: 'red',
+            inactiveTintColor: Color.primary,
             fontSize: 10
           }
          
