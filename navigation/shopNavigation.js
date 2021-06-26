@@ -20,9 +20,7 @@ const screenOptions = {
   headerTitleStyle: {
     fontWeight: "bold",
   },
-  headerRight: () => (
-    <AntDesign name="shoppingcart" color='white' size={35} onPress={() =>{}} />
-  ),
+ 
 };
 
 const Stack = createStackNavigator();
@@ -100,3 +98,15 @@ export const TabNavigation = () => {
     </Tab.Navigator>
   );
 };
+
+
+const Drawer = createDrawerNavigator();
+export const MainNavigation = ()=>{
+  return(
+    <Drawer.Navigator>
+      <Drawer.Screen component={TabNavigation} name="Home"/>
+      <Drawer.Screen component={OrderScreen} name="Orders" />
+      <Drawer.Screen component={CartNavigation} name="Carts" />
+    </Drawer.Navigator>
+  )
+}

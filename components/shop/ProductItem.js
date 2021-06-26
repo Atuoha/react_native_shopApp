@@ -39,8 +39,8 @@ const ProductItem = (props) => {
 
           <View style={styles.individualBtnView}>
             <Button
-              title={<AntDesign name="shoppingcart" size={17} />}
-              color={Color.primary}
+              title={<AntDesign name="shoppingcart" size={17} color={Color.primary} />}
+              color={Color.accent}
               onPress={props.addToCart}
             />
           </View>

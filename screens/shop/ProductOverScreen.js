@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback } from "react";
-import { FlatList, Text, StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import { FlatList, Text, StyleSheet, View, Platform } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import Color from "../../constants/color";
-import { useDispatch } from "react-redux";
-import { toggle_to_cart } from "../../store/actions/cart";
+import * as cartActions from "../../store/actions/cart";
+import { AntDesign, Ionicons } from '@expo/vector-icons'
 
 const ProductOverScreen = ({ route, navigation }) => {
   const Products = useSelector((state) => state.products.products);
@@ -15,13 +15,17 @@ const ProductOverScreen = ({ route, navigation }) => {
       headerTitleStyle: {
         fontSize: 23,
       },
+      headerRight: () => (
+        <Ionicons name="cart" color={Platform.OS === 'ios' ? Color.primary: 'white'} size={35} onPress={() => navigation.navigate('Cart')} />
+      ),
+      headerLeft: () => (
+        <Ionicons name="ios-menu" color={Platform.OS === 'ios' ? Color.primary: 'white'} size={35} onPress={() => navigation.toggleDrawer()} />
+      ),
     });
   });
 
-  const dispatch = useDispatch();
-  const toggle_to_cartFnc = useCallback(() => {
-    dispatch(toggle_to_cart);
-  }, [dispatch, Products]);
+  const dispatch = useDispatch()
+
 
   const renderItem = (itemData) => {
     return (
@@ -33,8 +37,7 @@ const ProductOverScreen = ({ route, navigation }) => {
           navigation.navigate("Details", { id: itemData.item.id })
         }
         addToCart={() =>
-            dispatch(toggle_to_cart(itemData.item.id))
-         
+            dispatch(cartActions.addToCart(itemData.item))
         }
       />
     );
@@ -52,14 +55,17 @@ const ProductOverScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   textView: {
-    backgroundColor: Color.primary,
+    backgroundColor: Color.accent,
     padding: 10,
   },
   text: {
     textAlign: "center",
-    color: "white",
+    color: Color.primary,
     // fontWeight: 'bold'
+    fontSize: 15
   },
+
+
 });
 
 export default ProductOverScreen;

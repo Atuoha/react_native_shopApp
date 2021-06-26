@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { TabNavigation } from "./navigation/shopNavigation";
+import { MainNavigation } from "./navigation/shopNavigation";
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
 import { productsReducer } from "./store/reducers/products";
@@ -35,7 +35,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <TabNavigation />
+        <MainNavigation />
       </NavigationContainer>
     </Provider>
   );
