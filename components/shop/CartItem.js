@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
+  ScrollView,
   Platform,
   TouchableOpacity,
 } from "react-native";
@@ -12,20 +12,22 @@ import Color from "../../constants/color";
 import { Ionicons } from "@expo/vector-icons";
 
 const ProductItem = (props) => {
-    const {price, quantity, name, removeFromCart} = props
+  const { price, quantity, name, removeFromCart, detailsFnc } = props;
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <View style={styles.grid}>
         <View style={styles.innerGrid}>
           <Text style={styles.quantity}>{quantity}</Text>
-          <Text style={styles.text}>{name}</Text>
+          <TouchableOpacity onPress={detailsFnc}>
+            <Text style={styles.text}>{name}</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.innerGrid}>
           <Text style={styles.text}>${price}</Text>
           <TouchableOpacity
-            onPress={() => console.log(".....")}
+            onPress={removeFromCart}
             style={styles.delBtn}>
             <Ionicons
               name={Platform.OS === "ios" ? "ios-trash" : "md-trash"}
@@ -36,7 +38,7 @@ const ProductItem = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

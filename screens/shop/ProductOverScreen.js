@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import Color from "../../constants/color";
 import * as cartActions from "../../store/actions/cart";
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 const ProductOverScreen = ({ route, navigation }) => {
   const Products = useSelector((state) => state.products.products);
@@ -16,16 +16,25 @@ const ProductOverScreen = ({ route, navigation }) => {
         fontSize: 23,
       },
       headerRight: () => (
-        <Ionicons name="cart" color={Platform.OS === 'ios' ? Color.primary: 'white'} size={35} onPress={() => navigation.navigate('Cart')} />
+        <Ionicons
+          name="cart"
+          color={Platform.OS === "ios" ? Color.primary : "white"}
+          size={35}
+          onPress={() => navigation.navigate("Cart")}
+        />
       ),
       headerLeft: () => (
-        <Ionicons name="ios-menu" color={Platform.OS === 'ios' ? Color.primary: 'white'} size={35} onPress={() => navigation.toggleDrawer()} />
+        <Ionicons
+          name="ios-menu"
+          color={Platform.OS === "ios" ? Color.primary : "white"}
+          size={35}
+          onPress={() => navigation.toggleDrawer()}
+        />
       ),
     });
   });
 
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   const renderItem = (itemData) => {
     return (
@@ -36,9 +45,7 @@ const ProductOverScreen = ({ route, navigation }) => {
         viewDetails={() =>
           navigation.navigate("Details", { id: itemData.item.id })
         }
-        addToCart={() =>
-            dispatch(cartActions.addToCart(itemData.item))
-        }
+        addToCart={() => dispatch(cartActions.addToCart(itemData.item))}
       />
     );
   };
@@ -62,10 +69,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: Color.primary,
     // fontWeight: 'bold'
-    fontSize: 15
+    fontSize: 15,
   },
-
-
 });
 
 export default ProductOverScreen;

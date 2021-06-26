@@ -38,7 +38,8 @@ import CartItem from "../../models/cartItem";
 const initialState = {
   products: PRODUCTS,
   cartProducts: {},
-  totalAmount: 0.00,
+  totalAmount: 0.0,
+  totalQuantity: 0
 };
 
 export const cartsReducer = (state = initialState, action) => {
@@ -53,8 +54,9 @@ export const cartsReducer = (state = initialState, action) => {
 
       if (state.cartProducts[addedCartItem.id]) {
         // already in carts
-        console.log('item quantity updated...')
+        console.log("item quantity updated...");
         newOrUpdatedCart = new CartItem(
+          addedCartItem.id,
           state.cartProducts[addedCartItem.id].quantity + 1,
           itemTitle,
           itemPrice,
@@ -62,8 +64,14 @@ export const cartsReducer = (state = initialState, action) => {
         );
       } else {
         // new to cart
-        console.log('item added...')
-        newOrUpdatedCart = new CartItem(1, itemTitle, itemPrice, itemSum);
+        console.log("item added...");
+        newOrUpdatedCart = new CartItem(
+          addedCartItem.id,
+          1,
+          itemTitle,
+          itemPrice,
+          itemSum
+        );
       }
 
       return {
@@ -73,6 +81,7 @@ export const cartsReducer = (state = initialState, action) => {
           [addedCartItem.id]: newOrUpdatedCart,
         },
         totalAmount: state.totalAmount + itemPrice,
+        totalQuantity: state.totalQuantity + 1,
       };
 
     default:

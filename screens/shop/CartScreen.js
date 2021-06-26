@@ -17,7 +17,7 @@ const CartScreen = ({ route, navigation }) => {
     const transformedCartItems = [];
     for (const key in state.carts.cartProducts) {
       transformedCartItems.push({
-        productId: state.carts.cartProducts[key].id,
+        productId: state.carts.cartProducts[key].productId,
         productTitle: state.carts.cartProducts[key].productTitle,
         productPrice: state.carts.cartProducts[key].productPrice,
         productQuantity: state.carts.cartProducts[key].quantity,
@@ -27,6 +27,7 @@ const CartScreen = ({ route, navigation }) => {
     return transformedCartItems;
   });
   const totalAmount = useSelector((state) => state.carts.totalAmount);
+  const totalQuantity = useSelector((state) => state.carts.totalQuantity);
   console.log(cartItems);
 
   useEffect(() => {
@@ -49,11 +50,12 @@ const CartScreen = ({ route, navigation }) => {
   const renderItem = (itemData) => {
     return (
       <CartItem
-        quantity ={itemData.item.productQuantity}
-        name ={itemData.item.productTitle}
-        price ={itemData.item.productPrice}
-        removeFromCart={() =>
-         console.log('......')
+        quantity={itemData.item.productQuantity}
+        name={itemData.item.productTitle}
+        price={itemData.item.productPrice}
+        removeFromCart={() => console.log("......")}
+        detailsFnc={() =>
+          navigation.navigate("Details", { id: itemData.item.productId })
         }
       />
     );
@@ -83,6 +85,9 @@ const CartScreen = ({ route, navigation }) => {
         </Text>
         <Text style={styles.caption}>
           Total Items: <Text style={styles.totalStyle}>{cartItems.length}</Text>
+        </Text>
+        <Text style={styles.caption}>
+          Total Quantity: <Text style={styles.totalStyle}>{totalQuantity}</Text>
         </Text>
         <Button title="Order Now" color={Color.primary} size={35} />
       </View>
