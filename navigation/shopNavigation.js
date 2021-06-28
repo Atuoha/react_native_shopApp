@@ -20,26 +20,60 @@ const screenOptions = {
   headerTitleStyle: {
     fontWeight: "bold",
   },
- 
 };
 
 const Stack = createStackNavigator();
 export const ShopNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator
+      screenOptions={screenOptions}
+      navigationOptions={{
+        drawerIcon: (drawerConfig) => (
+          <Ionicons
+            name={Platform.OS === "ios" ? "ios-list" : "md-list"}
+            size={25}
+            color={drawerConfig.color}
+          />
+        ),
+      }}>
       <Stack.Screen name="Products" component={ProductOverScreen} />
       <Stack.Screen name="Details" component={ProductDetailsScreen} />
-      <Stack.Screen name="Orders" component={OrderScreen} />
-      <Stack.Screen name="Cart" component={CartScreen} />
     </Stack.Navigator>
   );
 };
 
-const Cart = createStackNavigator();
 export const CartNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator
+      screenOptions={screenOptions}
+      navigationOptions={{
+        drawerIcon: (drawerConfig) => (
+          <Ionicons
+            name={Platform.OS === "ios" ? "ios-list" : "md-list"}
+            size={25}
+            color={drawerConfig.color}
+          />
+        ),
+      }}>
       <Stack.Screen name="Carts" component={CartScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const OrdersNavigation = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={screenOptions}
+      navigationOptions={{
+        drawerIcon: (drawerConfig) => (
+          <Ionicons
+            name={Platform.OS === "ios" ? "ios-list" : "md-list"}
+            size={25}
+            color={drawerConfig.color}
+          />
+        ),
+      }}>
+      <Stack.Screen name="Orders" component={OrderScreen} />
     </Stack.Navigator>
   );
 };
@@ -56,42 +90,54 @@ export const TabNavigation = () => {
       }}>
       <Tab.Screen
         component={ShopNavigation}
-        name="shop"
+        name="Home"
         options={{
           tabLabel: "Home",
           tabBarIcon: (tint) => {
-            return(
-              <AntDesign name="home" size={25} color={tint.color} />
-            )
+            return <AntDesign name="home" size={25} color={tint.color} />;
           },
-          tabTitleStyle:{
+          tabTitleStyle: {
             inactiveTintColor: Color.primary,
-            fontSize: 10
-          }
-         
+            fontSize: 10,
+          },
         }}
       />
       <Tab.Screen
         component={CartNavigation}
-        name="cart"
+        name="Carts"
         options={{
           tabLabel: "Cart",
           tabBarIcon: (tint) => {
-            return(
+            return (
               <AntDesign name="shoppingcart" size={25} color={tint.color} />
-            )
+            );
+          },
+        }}
+      />
+
+      <Tab.Screen
+        component={OrdersNavigation}
+        name="Orders"
+        options={{
+          tabLabel: "Order",
+          tabBarIcon: (tint) => {
+            return (
+              <Ionicons
+                name={Platform.OS === "ios" ? "ios-list" : "md-list"}
+                size={25}
+                color={tint.color}
+              />
+            );
           },
         }}
       />
       <Tab.Screen
         component={CartNavigation}
-        name="user"
+        name="Profile"
         options={{
           tabLabel: "User",
           tabBarIcon: (tint) => {
-            return(
-              <AntDesign name="user" size={25}  color={tint.color} />
-            )
+            return <AntDesign name="user" size={25} color={tint.color} />;
           },
         }}
       />
@@ -99,14 +145,37 @@ export const TabNavigation = () => {
   );
 };
 
-
 const Drawer = createDrawerNavigator();
-export const MainNavigation = ()=>{
-  return(
-    <Drawer.Navigator>
-      <Drawer.Screen component={TabNavigation} name="Home"/>
-      <Drawer.Screen component={OrderScreen} name="Orders" />
-      <Drawer.Screen component={CartNavigation} name="Carts" />
+export const MainNavigation = () => {
+  return (
+    <Drawer.Navigator drawerContentOptions={{ activeTintColor: Color.primary }}>
+      <Drawer.Screen
+        component={TabNavigation}
+        name="Home"
+        options={{
+          drawerIcon: (tint) => {
+            return <Ionicons name="home" size={25} color={tint.color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        component={OrdersNavigation}
+        name="Orders"
+        options={{
+          drawerIcon: (tint) => {
+            return <Ionicons name="list" size={25} color={tint.color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        component={CartNavigation}
+        name="Carts"
+        options={{
+          drawerIcon: (tint) => {
+            return <Ionicons name="cart" size={25} color={tint.color} />;
+          },
+        }}
+      />
     </Drawer.Navigator>
-  )
-}
+  );
+};

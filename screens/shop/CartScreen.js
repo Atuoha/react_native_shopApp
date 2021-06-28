@@ -7,11 +7,12 @@ import {
   View,
   Button,
 } from "react-native";
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
 import Color from "../../constants/color";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { removeFromCart } from '../../store/actions/cart'
+import * as cartActions from '../../store/actions/cart'
+import { addOrder } from "../../store/actions/orders";
 
 const CartScreen = ({ route, navigation }) => {
   const cartItems = useSelector((state) => {
@@ -25,7 +26,9 @@ const CartScreen = ({ route, navigation }) => {
         productSum: state.carts.cartProducts[key].sum,
       });
     }
-    return transformedCartItems;
+    return transformedCartItems.sort((a, b) =>
+      a.productId > b.productId ? 1 : -1
+    );
   });
   const totalAmount = useSelector((state) => state.carts.totalAmount);
   const totalQuantity = useSelector((state) => state.carts.totalQuantity);
@@ -53,10 +56,11 @@ const CartScreen = ({ route, navigation }) => {
   const renderItem = (itemData) => {
     return (
       <CartItem
+        id={itemData.item.productId}
         quantity={itemData.item.productQuantity}
         name={itemData.item.productTitle}
         price={itemData.item.productPrice}
-        removeFromCart={() => dispatch(removeFromCart(itemData.item.productId))}
+        removeFromCart={() => dispatch(cartActions.removeFromCart(itemData.item.productId))}
         detailsFnc={() =>
           navigation.navigate("Details", { id: itemData.item.productId })
         }
@@ -64,13 +68,19 @@ const CartScreen = ({ route, navigation }) => {
     );
   };
 
-  //   let keys =  Object.keys(Products);
-  //   let ProductCount = keys.length
+  const orderNow = (items, amount) => {
+    dispatch(addOrder(items, amount));
+    setTimeout(() => {
+        dispatch(cartActions.remove_all_from_cart())
+      navigation.navigate("Orders");
+    }, 500);
+  };
+
 
   if (cartItems.length === 0) {
     return (
       <View style={styles.screen}>
-        <Text>Opps! Cart is empty! Add Item to Cart</Text>
+        <Text>Opps! Cart is empty. Add Item to Cart</Text>
       </View>
     );
   }
@@ -92,7 +102,11 @@ const CartScreen = ({ route, navigation }) => {
         <Text style={styles.caption}>
           Total Quantity: <Text style={styles.totalStyle}>{totalQuantity}</Text>
         </Text>
-        <Button title="Order Now" color={Color.primary} size={35} />
+        <Button
+          title="Order Now"
+          color={Color.primary}
+          onPress={() => orderNow(cartItems, totalAmount)}
+        />
       </View>
       <FlatList data={cartItems} renderItem={renderItem} />
     </>

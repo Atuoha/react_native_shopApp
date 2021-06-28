@@ -12,11 +12,11 @@ import Color from "../../constants/color";
 import { Ionicons } from "@expo/vector-icons";
 
 const ProductItem = (props) => {
-  const { price, quantity, name, removeFromCart, detailsFnc } = props;
+  const { price, quantity, name, removeFromCart, detailsFnc, id } = props;
 
   return (
-    <ScrollView style={styles.screen}>
-      <View style={styles.grid}>
+    <ScrollView style={styles.screen} key={id}>
+      <View style={styles.grid} >
         <View style={styles.innerGrid}>
           <Text style={styles.quantity}>{quantity}</Text>
           <TouchableOpacity onPress={detailsFnc}>

@@ -20,7 +20,7 @@ const ProductOverScreen = ({ route, navigation }) => {
           name="cart"
           color={Platform.OS === "ios" ? Color.primary : "white"}
           size={35}
-          onPress={() => navigation.navigate("Cart")}
+          onPress={() => navigation.navigate("Carts")}
         />
       ),
       headerLeft: () => (

@@ -32,7 +32,7 @@
 // };
 
 import PRODUCTS from "../../data/dummy-data";
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
+import { ADD_TO_CART, REMOVE_FROM_CART, REMOVE_ALL_FROM_CART } from "../actions/cart";
 import CartItem from "../../models/cartItem";
 
 const initialState = {
@@ -42,7 +42,7 @@ const initialState = {
   totalQuantity: 0,
 };
 
-export const cartsReducer = (state = initialState, action) => {
+const cartsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       const addedCartItem = action.product;
@@ -118,7 +118,13 @@ export const cartsReducer = (state = initialState, action) => {
         totalQuantity: state.totalQuantity - 1,
       };
 
+      case REMOVE_ALL_FROM_CART:
+          return {initialState}
+
     default:
       return state;
   }
 };
+
+
+export default  cartsReducer

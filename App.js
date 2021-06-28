@@ -3,14 +3,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { MainNavigation } from "./navigation/shopNavigation";
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
-import { productsReducer } from "./store/reducers/products";
-import { cartsReducer } from "./store/reducers/cart";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import productsReducer  from "./store/reducers/products";
+import cartsReducer  from "./store/reducers/cart";
+import ordersReducer  from "./store/reducers/orders";
 
 const rootReducer = combineReducers({
   products: productsReducer,
   carts: cartsReducer,
+  orders: ordersReducer,
 });
 const store = createStore(rootReducer);
 
