@@ -32,14 +32,14 @@
 // };
 
 import PRODUCTS from "../../data/dummy-data";
-import { ADD_TO_CART } from "../actions/cart";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
 import CartItem from "../../models/cartItem";
 
 const initialState = {
   products: PRODUCTS,
   cartProducts: {},
   totalAmount: 0.0,
-  totalQuantity: 0
+  totalQuantity: 0,
 };
 
 export const cartsReducer = (state = initialState, action) => {
@@ -82,6 +82,40 @@ export const cartsReducer = (state = initialState, action) => {
         },
         totalAmount: state.totalAmount + itemPrice,
         totalQuantity: state.totalQuantity + 1,
+      };
+
+    case REMOVE_FROM_CART:
+      const selectedCartItem = state.cartProducts[action.productId];
+      const currentQty = selectedCartItem.quantity;
+      let updatedCartItems;
+
+      if (currentQty > 1) {
+        // reduce quantity
+        console.log('quantity reduced...')
+        const updatedCartItem = new CartItem(
+          action.productId,
+          selectedCartItem.quantity - 1,
+          selectedCartItem.productTitle,
+          selectedCartItem.productPrice,
+          selectedCartItem.sum - selectedCartItem.productPrice
+        );
+
+        updatedCartItems = {
+          ...state.cartProducts,
+          [action.productId]: updatedCartItem,
+        };
+      } else {
+        // delete totally
+        console.log('item removed...')
+        updatedCartItems = { ...state.cartProducts };
+        delete updatedCartItems[action.productId];
+      }
+
+      return {
+        ...state,
+        cartProducts: updatedCartItems,
+        totalAmount: state.totalAmount - selectedCartItem.productPrice,
+        totalQuantity: state.totalQuantity - 1,
       };
 
     default:

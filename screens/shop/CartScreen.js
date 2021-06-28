@@ -7,10 +7,11 @@ import {
   View,
   Button,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
 import CartItem from "../../components/shop/CartItem";
 import Color from "../../constants/color";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { removeFromCart } from '../../store/actions/cart'
 
 const CartScreen = ({ route, navigation }) => {
   const cartItems = useSelector((state) => {
@@ -47,13 +48,15 @@ const CartScreen = ({ route, navigation }) => {
     });
   });
 
+  const dispatch = useDispatch();
+
   const renderItem = (itemData) => {
     return (
       <CartItem
         quantity={itemData.item.productQuantity}
         name={itemData.item.productTitle}
         price={itemData.item.productPrice}
-        removeFromCart={() => console.log("......")}
+        removeFromCart={() => dispatch(removeFromCart(itemData.item.productId))}
         detailsFnc={() =>
           navigation.navigate("Details", { id: itemData.item.productId })
         }

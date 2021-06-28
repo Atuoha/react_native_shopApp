@@ -33,7 +33,6 @@ const ProductItem = (props) => {
               name={Platform.OS === "ios" ? "ios-trash" : "md-trash"}
               size={25}
               color={Color.primary}
-              onPress={removeFromCart}
             />
           </TouchableOpacity>
         </View>
