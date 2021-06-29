@@ -12,29 +12,30 @@ import Color from "../../constants/color";
 import { Ionicons } from "@expo/vector-icons";
 
 const ProductItem = (props) => {
-  const { price, quantity, name, removeFromCart, detailsFnc, id } = props;
+  const { price,sum, deletable, quantity, name, removeFromCart, detailsFnc, id } =
+    props;
 
   return (
     <ScrollView style={styles.screen} key={id}>
-      <View style={styles.grid} >
+      <View style={styles.grid}>
         <View style={styles.innerGrid}>
           <Text style={styles.quantity}>{quantity}</Text>
           <TouchableOpacity onPress={detailsFnc}>
-            <Text style={styles.text}>{name}</Text>
+            <Text style={styles.text}>{name.substring(0,8) + '...'}</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.innerGrid}>
-          <Text style={styles.text}>${price}</Text>
-          <TouchableOpacity
-            onPress={removeFromCart}
-            style={styles.delBtn}>
-            <Ionicons
-              name={Platform.OS === "ios" ? "ios-trash" : "md-trash"}
-              size={25}
-              color={Color.primary}
-            />
-          </TouchableOpacity>
+          <Text style={styles.text}>${price} | ${sum}</Text>
+          {deletable && (
+            <TouchableOpacity onPress={removeFromCart} style={styles.delBtn}>
+              <Ionicons
+                name={Platform.OS === "ios" ? "ios-trash" : "md-trash"}
+                size={25}
+                color={Color.primary}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScrollView>

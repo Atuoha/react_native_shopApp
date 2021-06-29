@@ -10,10 +10,12 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Color from "../../constants/color";
 import { useSelector } from "react-redux";
-import OrderItem from '../../components/shop/OrderItem'
+import OrderItem from "../../components/shop/OrderItem";
 
 const OrderScreen = ({ route, navigation }) => {
   const orders = useSelector((state) => state.orders.orderList);
+  const orderItems = useSelector((state) => state.orders.orderList.items);
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: "Ordering Items",
@@ -46,7 +48,12 @@ const OrderScreen = ({ route, navigation }) => {
 
   const renderItem = (itemData) => {
     return (
-      <OrderItem total={itemData.item.totalAmount} date={itemData.item.date} />
+      <OrderItem
+        orders={itemData.item.items}
+        total={itemData.item.totalAmount}
+        date={itemData.item.readableDate}
+        navigation = {navigation.navigate}
+      />
     );
   };
 

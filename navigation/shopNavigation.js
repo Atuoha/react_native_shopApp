@@ -114,7 +114,6 @@ export const TabNavigation = () => {
           },
         }}
       />
-
       <Tab.Screen
         component={OrdersNavigation}
         name="Orders"
@@ -173,6 +172,15 @@ export const MainNavigation = () => {
         options={{
           drawerIcon: (tint) => {
             return <Ionicons name="cart" size={25} color={tint.color} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        component={OrdersNavigation}
+        name="Profile"
+        options={{
+          drawerIcon: (tint) => {
+            return <AntDesign name="user" size={25} color={tint.color} />;
           },
         }}
       />

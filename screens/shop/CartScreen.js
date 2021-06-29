@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CartItem from "../../components/shop/CartItem";
 import Color from "../../constants/color";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import * as cartActions from '../../store/actions/cart'
+import * as cartActions from "../../store/actions/cart";
 import { addOrder } from "../../store/actions/orders";
 
 const CartScreen = ({ route, navigation }) => {
@@ -59,11 +59,15 @@ const CartScreen = ({ route, navigation }) => {
         id={itemData.item.productId}
         quantity={itemData.item.productQuantity}
         name={itemData.item.productTitle}
+        sum={itemData.item.productSum}
         price={itemData.item.productPrice}
-        removeFromCart={() => dispatch(cartActions.removeFromCart(itemData.item.productId))}
+        removeFromCart={() =>
+          dispatch(cartActions.removeFromCart(itemData.item.productId))
+        }
         detailsFnc={() =>
           navigation.navigate("Details", { id: itemData.item.productId })
         }
+        deletable="true"
       />
     );
   };
@@ -71,11 +75,10 @@ const CartScreen = ({ route, navigation }) => {
   const orderNow = (items, amount) => {
     dispatch(addOrder(items, amount));
     setTimeout(() => {
-        dispatch(cartActions.remove_all_from_cart())
+      dispatch(cartActions.remove_all_from_cart());
       navigation.navigate("Orders");
     }, 500);
   };
-
 
   if (cartItems.length === 0) {
     return (

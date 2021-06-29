@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     margin: 10,
     overflow: "hidden",
+    backgroundColor: 'white',
   },
 
   imageStyle: {
