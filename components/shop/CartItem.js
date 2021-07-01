@@ -26,7 +26,7 @@ const ProductItem = (props) => {
         </View>
 
         <View style={styles.innerGrid}>
-          <Text style={styles.text}>${price} | ${sum}</Text>
+          <Text style={styles.text}>${price.toFixed(2)} | ${sum.toFixed(2)}</Text>
           {deletable && (
             <TouchableOpacity onPress={removeFromCart} style={styles.delBtn}>
               <Ionicons

@@ -97,7 +97,7 @@ const CartScreen = ({ route, navigation }) => {
       <View style={styles.upperScreen}>
         <Text style={styles.caption}>
           Total Amount:
-          <Text style={styles.totalStyle}> ${totalAmount.toFixed(2)}</Text>
+          <Text style={styles.totalStyle}> ${Math.random(totalAmount.toFixed(2)) * 100 / 100}</Text>
         </Text>
         <Text style={styles.caption}>
           Total Items: <Text style={styles.totalStyle}>{cartItems.length}</Text>

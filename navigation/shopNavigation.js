@@ -7,9 +7,15 @@ import ProductOverScreen from "../screens/shop/ProductOverScreen";
 import ProductDetailsScreen from "../screens/shop/ProductDetailsScreen";
 import OrderScreen from "../screens/shop/OrderScreen";
 import CartScreen from "../screens/shop/CartScreen";
+import UserProductsScreen from '../screens/user/ProductsScreen'
+import Profile from '../screens/user/Profile'
+import EditProductScreen from '../screens/user/CreateAndEditProductScreen'
 import Color from "../constants/color";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 
+
+
+// GENERAL OPTIONS FOR STACK
 const screenOptions = {
   headerStyle: {
     backgroundColor:
@@ -21,6 +27,8 @@ const screenOptions = {
     fontWeight: "bold",
   },
 };
+
+// STACK
 
 const Stack = createStackNavigator();
 export const ShopNavigation = () => {
@@ -45,16 +53,7 @@ export const ShopNavigation = () => {
 export const CartNavigation = () => {
   return (
     <Stack.Navigator
-      screenOptions={screenOptions}
-      navigationOptions={{
-        drawerIcon: (drawerConfig) => (
-          <Ionicons
-            name={Platform.OS === "ios" ? "ios-list" : "md-list"}
-            size={25}
-            color={drawerConfig.color}
-          />
-        ),
-      }}>
+      screenOptions={screenOptions}>
       <Stack.Screen name="Carts" component={CartScreen} />
     </Stack.Navigator>
   );
@@ -63,20 +62,56 @@ export const CartNavigation = () => {
 export const OrdersNavigation = () => {
   return (
     <Stack.Navigator
-      screenOptions={screenOptions}
-      navigationOptions={{
-        drawerIcon: (drawerConfig) => (
-          <Ionicons
-            name={Platform.OS === "ios" ? "ios-list" : "md-list"}
-            size={25}
-            color={drawerConfig.color}
-          />
-        ),
-      }}>
+      screenOptions={screenOptions}>
       <Stack.Screen name="Orders" component={OrderScreen} />
     </Stack.Navigator>
   );
 };
+
+
+export const UserProductsNavigation = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={screenOptions}>
+      <Stack.Screen name="UserProducts" component={UserProductsScreen} />
+      <Stack.Screen name="EditProduct" component={EditProductScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export const ProfileNavigation = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={screenOptions}>
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+};
+
+// export const EditProductNavigation = () => {
+//   return (
+//     <Stack.Navigator
+//       screenOptions={screenOptions}>
+//       <Stack.Screen name="EditProduct" component={EditProductScreen} />
+//     </Stack.Navigator>
+//   );
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TAB
 
 const Tab = createBottomTabNavigator();
 export const TabNavigation = () => {
@@ -86,7 +121,6 @@ export const TabNavigation = () => {
         activeTintColor: "white",
         activeBackgroundColor: Color.primary,
         inactiveTintColor: Color.primary,
-        activeColor: "white",
       }}>
       <Tab.Screen
         component={ShopNavigation}
@@ -131,7 +165,7 @@ export const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        component={CartNavigation}
+        component={ProfileNavigation}
         name="Profile"
         options={{
           tabLabel: "User",
@@ -143,6 +177,22 @@ export const TabNavigation = () => {
     </Tab.Navigator>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DRAWER
 
 const Drawer = createDrawerNavigator();
 export const MainNavigation = () => {
@@ -176,11 +226,11 @@ export const MainNavigation = () => {
         }}
       />
       <Drawer.Screen
-        component={OrdersNavigation}
-        name="Profile"
+        component={UserProductsNavigation}
+        name="Manage"
         options={{
           drawerIcon: (tint) => {
-            return <AntDesign name="user" size={25} color={tint.color} />;
+            return <Ionicons name={Platform.OS === 'ios' ? 'ios-create': 'md-create'} size={25} color={tint.color} />;
           },
         }}
       />

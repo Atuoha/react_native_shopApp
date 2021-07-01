@@ -20,7 +20,7 @@ const ProductItem = (props) => {
   }
 
   return (
-      <RenderComponent onPress={props.viewDetails} style={styles.grid} useForeground>
+      <RenderComponent onPress={props.onSelect} style={styles.grid} useForeground>
         <Image style={styles.imageStyle} source={{ uri: props.imageUrl }} />
 
         <View style={styles.details}>
@@ -29,21 +29,7 @@ const ProductItem = (props) => {
         </View>
 
         <View style={styles.btnView}>
-          <View style={styles.individualBtnView}>
-            <Button
-              title={<AntDesign name="book" size={17} />}
-              color={Color.primary}
-              onPress={props.viewDetails}
-            />
-          </View>
-
-          <View style={styles.individualBtnView}>
-            <Button
-              title={<AntDesign name="shoppingcart" size={17} color={Color.primary} />}
-              color={Color.accent}
-              onPress={props.addToCart}
-            />
-          </View>
+          {props.children}
         </View>
       </RenderComponent>
   );
@@ -97,9 +83,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 
-  individualBtnView: {
-    width: "45%",
-  },
+  
 });
 
 export default ProductItem;

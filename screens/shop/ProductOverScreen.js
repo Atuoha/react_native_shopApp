@@ -1,5 +1,12 @@
 import React, { useEffect, useCallback } from "react";
-import { FlatList, Text, StyleSheet, View, Platform } from "react-native";
+import {
+  FlatList,
+  Text,
+  StyleSheet,
+  View,
+  Platform,
+  Button,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import Color from "../../constants/color";
@@ -42,11 +49,29 @@ const ProductOverScreen = ({ route, navigation }) => {
         imageUrl={itemData.item.image}
         price={itemData.item.price}
         name={itemData.item.name}
-        viewDetails={() =>
+        onSelect={() =>
           navigation.navigate("Details", { id: itemData.item.id })
-        }
-        addToCart={() => dispatch(cartActions.addToCart(itemData.item))}
-      />
+        }>
+        <View style={styles.individualBtnView}>
+          <Button
+            title={<AntDesign name="book" size={17} />}
+            color={Color.primary}
+            onPress={() =>
+              navigation.navigate("Details", { id: itemData.item.id })
+            }
+          />
+        </View>
+
+        <View style={styles.individualBtnView}>
+          <Button
+            title={
+              <AntDesign name="shoppingcart" size={17} color={Color.primary} />
+            }
+            color={Color.accent}
+            onPress={() => dispatch(cartActions.addToCart(itemData.item))}
+          />
+        </View>
+      </ProductItem>
     );
   };
 
@@ -70,6 +95,10 @@ const styles = StyleSheet.create({
     color: Color.primary,
     // fontWeight: 'bold'
     fontSize: 15,
+  },
+
+  individualBtnView: {
+    width: "45%",
   },
 });
 
